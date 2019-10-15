@@ -21,11 +21,16 @@ h1 {
     text-align: center;
 } */
 
+.button.larger {
+    width: 80%;
+    margin: 20px auto 28px auto;
+}
+  
 .row.no-gap.header {
     margin-top: 35px;
 }
 
-.col-70.tablet-70 {
+.col-100.tablet-100 {
     padding: 0 15px;
     font-size: 24px;
     display: flex;
@@ -33,6 +38,10 @@ h1 {
 .col-100.tablet-100.grid {
     border-radius: 10px;
     border: 1px solid #ababab;
+}
+
+.md .row.no-gap .col-70 {
+    margin-top: 25px;
 }
 
 img.img-logo {
@@ -65,7 +74,7 @@ img.img-product {
 }
 
 input.search {
-    width: 35%;
+    width: 80%;
     height: 45px;
     color: #000;
     font-size: 32px;
@@ -73,6 +82,18 @@ input.search {
     border-radius: 10px;
     padding: 5px;
 }
+
+input.qty {
+    width: 25%;
+    height: 45px;
+    color: #000;
+    font-size: 32px;
+    border: 1px solid #ababab;
+    border-radius: 10px;
+    padding: 5px;
+}
+
+button.button.col.button-round.btn-search,
 button.button.col.button-round.btn-submit {
     background: #ff0000;
     width: 100px !important;
@@ -82,8 +103,7 @@ button.button.col.button-round.btn-submit {
 
 /* button.button.col.button-round.btn-dummy {
     visibility: hidden;
-}
-button.button.col.button-round.btn-search, */
+} */
 button.button.col.button-round.btn-scan,
 button.button.col.button-round.btn-reset {
     background: #03274e;
