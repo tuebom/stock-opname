@@ -1,11 +1,31 @@
 <template>
   <div data-name="home" class="page">
 
-    <!-- <div class="navbar">
+    <div class="navbar">
       <div class="navbar-inner">
-        <div class="title">Awesome App</div>
+        <div class="left">
+          <a href="#" class="link icon-only panel-open" data-panel="left">
+            <i class="icon f7-icons ios-only">menu</i>
+            <i class="icon material-icons md-only">menu</i>
+          </a>
+        </div>
+        <div class="title sliding"><img class="responsive" src="img/logo.png" /></div>
+        <div class="right">
+          <a href="/chat/" data-view=".view-main" class="link icon-only">
+            <i class="icon f7-icons ios-only">chat</i>
+            <i class="icon material-icons md-only">chat</i>
+          </a>
+          <!-- <a href="/cart/" data-view=".view-main" class="link icon-only">
+            <i class="icon f7-icons ios-only">shopping_cart<span class="badge color-red"></span></i>
+            <i class="icon material-icons md-only">shopping_cart<span class="badge color-red"></span></i>
+          </a> -->
+          <a href="#" class="link icon-only panel-open" data-panel="right">
+            <i class="icon f7-icons ios-only">more_vert</i>
+            <i class="icon material-icons md-only">more_vert</i>
+          </a>
+        </div>
       </div>
-    </div> -->
+    </div>
 
     <!-- <div class="toolbar">
       <div class="toolbar-inner">
@@ -16,58 +36,17 @@
     <div class="page-content">
       
      
-      <!-- search bar -->
-      <div class="row no-gap header">
-        <div class="col-100 tablet-100">
-          <input type="text" class="search">&nbsp;&nbsp;
-          <button class="button col button-round btn-search">Search</button>&nbsp;
-        </div>
-      </div>
-      
-      <!-- item-info bar -->
-      <div class="item-info" style="padding-left: 15px;">
-        <!-- <div class="row no-gap">
-          <div class="col-70 title">Basic Long Apron Brown</div>
-          <div class="col-30 picture"><img class="img-product" src="img/noimage.png" /></div>
-        </div> -->
-      </div>
-
-      <!-- qty bar -->
-      <div class="row no-gap">
-        <div class="col-100 tablet-100">
-          <input type="text" class="qty">&nbsp;&nbsp;
-          <button class="button col button-round btn-submit">Submit</button>&nbsp;
-          <!-- <button class="button col button-round btn-scan">Scan</button>&nbsp; -->
-          <button class="button col button-round btn-reset">Clear</button>
-        </div>
-      </div>
-          
-      <!-- header -->
-      <div class="row" style="padding: 0 15px 10px 15px; box-shadow: 0px 5px 7px 0px rgba(216,216,216,1);">
-        <div class="col-100 tablet-100 grid">
-          <table class="grid">
-            <tbody>
-              <tr>
-                <td>Item Name</td>
-                <td>Real</td>
-                <td>System</td>
-                <td style="border-right: none;">Selisih</td>
-                <!-- <td style="border-right: none;">Picture</td> -->
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-
-      <!-- data grid -->
-      <div class="row item">
-          <div class="col-100 tablet-100">
-            <div class="list virtual-list virtual-stock">
-            </div>
-          
+      <div class="block header">
+        <div data-pagination='{"el": ".swiper-pagination"}' class="swiper-container swiper-init dashboard">
+          <div class="swiper-pagination dashboard"></div>
+          <div class="swiper-wrapper">
+            {{#each banner}}
+            <div class="swiper-slide"><img class="lazy header" src="https://askitchen.com/upload/mobile-banner/{{filename}}" /></div>
+            {{/each}}
           </div>
         </div>
       </div>
+
     </div>
   </div>
 </template>
@@ -78,220 +57,56 @@
     on: {
       
       pageBeforeIn: function (event, page) {
-
-        var virtualList = app.virtualList.create({
-          // List Element
-          el: '.virtual-stock',
-          // Pass array with items
-          items: items,
-          // Custom search function for searchbar
-          searchAll: function (query, items) {
-            // var found = [];
-            // for (var i = 0; i < items.length; i++) {
-            //   if (items[i].nama.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
-            // }
-            // return found; //return array with mathced indexes
-          },
-          // List item Template7 template
-          itemTemplate:
-            '<li>' +
-            '    <table class="grid">' +
-            '      <tbody>' +
-            '        <tr>' +
-            '          <td>{{nama}}</td>' +
-            '          <td><span class="item-store">{{store}}</span></td>' +
-            '          <td><span class="item-whouse">{{whouse}}</span></td>' +
-            '          <td style="border-right: none;"><span class="item-selisih">{{selisih}}</span></td>' +
-            // '          <td style="border-right: none; padding: 0 15px;"><img class="img-product" src="{{gambar}}" />&nbsp;' +
-            '        </tr>' +
-            '      </tbody>' +
-            '    </table>' +
-            '</li>',
-          // Item height
-          //height: app.theme === 'ios' ? 63 : 73,
-        });
         
+        if (app.data.bLogedIn) {
+
+          // app.request.get( app.data.endpoint + 'cart/total_items', function(res) {
+                    
+          //   var data = JSON.parse(res);
+            
+          //   if (data.status)
+          //   {
+          //     app.data.total_items = data.totqty;
+          //     if (app.data.total_items > 0) {
+          //       $$('.badge').text(data.totqty);
+          //       $$('.badge').css("display", "block");
+          //     }
+          //   } else {
+          //     $$('.badge').css("display", "none");
+          //     app.data.total_items = 0;
+          //   }
+          // });
+        }
       },
       
       pageInit: function(e, page) {
-        
+                
+        // Note: gunakan selecter secara lengkap untuk menghindari error
+        var cmp = $$('.swiper-container.swiper-init.dashboard');
+        // console.log(cmp.swiper)
 
-        $$('.btn-search').on('click', function (e) {
+        if (cmp.swiper === undefined) {
           
-          var kode = $$('.search').val();
-
-          if (kode == '') {
-            app.dialog.alert('Input kode item!');
-            return;
-          }
-
-          
-          app.preloader.show();
-
-          var url_stock  = 'https://apgroup.id/api/resource/Item?fields=["item_name,brand,image"]&filters=[["Item","item_code","=","'+encodeURI(kode)+'"]]';
-          var url_qty    = 'https://apgroup.id/api/resource/Bin?fields=["actual_qty","warehouse"]&filters=[["Bin","item_code","=","'+encodeURI(kode)+'"],["Bin","warehouse","=","'+app.data.whouse+'"]]';
-
-          app.request.getJSON( url_stock, function(res) {
-            
-            app.preloader.hide();
-            
-            if (res.data) {
-              
-              // console.log(res.data[0].image)
-              // console.log(res.data[0].item_name)
-
-              app.data.code   = kode;
-              app.data.name   = res.data[0].item_name;
-              app.data.brand  = res.data[0].brand;
-              app.data.image  = res.data[0].image;
-
-              $$('.item-info').html('<div class="row no-gap"><div class="col-70 title">'+app.data.name+'</div><div class="col-30 picture"><img class="img-product" src="https://apgroup.id'+app.data.image+'" /></div></div>');
-                    
-              app.request.getJSON( url_qty, function(res1) {
-              
-                app.data.sysqty = res1.data.actual_qty;
-                console.log('app.data.sysqty: '+app.data.sysqty)
-              });
-
-              $$('.qty').focus();
-            } else
-              app.dialog.alert('Item tidak ditemukan!');
+          var swiper = app.swiper.create('.swiper-container.swiper-init.dashboard', {
+              speed: 400,
+              loop: true,
+              spaceBetween: 100
           });
-        });
+
+          swiper.autoplay.start();
+        }
 
 
-        $$('.btn-submit').on('click', function (e) {
+
+        // app.request.get( app.data.endpoint + 'cart/total_items', function(res) {
+        //   var data = JSON.parse(res);
           
-          var kode = $$('.search').val();
-
-          if (kode == '') {
-            app.dialog.alert('Input kode item!');
-            return;
-          }
-
-          
-          var qty = $$('.qty').val();
-
-          if (qty == '') {
-            app.dialog.alert('Input qty!');
-            return;
-          }
-
-          // if (app.methods.itemExists(kode)) {
-          //   app.dialog.alert('Item barang sudah ada!');
-          //   $$('.search').val('');
-          //   return;
-          // }
-
-          app.preloader.show();
-
-          var formData = [];
-
-          formData.kode   = kode;
-          formData.whouse = app.data.whouse;
-          formData.brand  = app.data.brand;
-          formData.userid = app.data.userid;
-          formData.qty    = qty;
-          formData.sysqty = app.data.sysqty;
-
-          app.request.post( app.data.endpoint + 'stock-opname', formData, function(res) {
-            
-            app.preloader.hide();
-            
-            var data = JSON.parse(res);
-
-            if (data.status) {
-
-              // $$('.item-info').html('');
-
-              // refresh display
-              app.router.navigate('/', {
-                reloadCurrent: true,
-                ignoreCache: true,
-              });
-
-            } else {
-              app.dialog.alert('Item sudah pernah diinput pada tanggal ' + data.tglinput +' oleh ' + data.userid);
-              $$('.item-info').html('');
-              $$('.search').focus();
-            }
-
-          });
-        });
-        
-        $$('.btn-scan').on('click', function (e) {
-          
-
-          cordova.plugins.barcodeScanner.scan(
-            
-            function (result) {
-              
-              if (!result.cancelled) {
-              
-                $$('.search').val(result.text);
-
-                // result.text - result.format
-                if (app.methods.itemExists(result.text)) {
-                  app.dialog.alert('Item barang sudah ada!');
-                  $$('.search').val('');
-                  return;
-                }
-
-                app.preloader.show();
-
-                app.request.getJSON( app.data.endpoint + 'stock-info/'+result.text, function(res) {
-                  
-                  app.preloader.hide();
-
-                  if (res.data.status) {
-                    
-                    items.push({ kdbar: res.data.kdbar,
-                                    nama: res.data.nama,
-                                    hjual: res.data.hjual,
-                                    store: res.data.store,
-                                    whouse: res.data.whouse,
-                                    gambar: res.data.gambar });
-
-                    // refresh display
-                    app.router.navigate('/', {
-                      reloadCurrent: true,
-                      ignoreCache: true,
-                    });
-                  
-                  } else
-                    app.dialog.alert('Item tidak ditemukan!');
-                });
-              } // result.cancelled?
-            },
-            function (error) {
-                app.dialog.alert("Scanning failed: " + error);
-            },
-            {
-                preferFrontCamera : true, // iOS and Android
-                showFlipCameraButton : true, // iOS and Android
-                showTorchButton : true, // iOS and Android
-                torchOn: true, // Android, launch with the torch switched on (if available)
-                saveHistory: false, // Android, save scan history (default false)
-                prompt : "Place a barcode inside the scan area", // Android
-                resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
-                formats : "EAN_13,CODE_128,QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
-                orientation : "landscape", // Android only (portrait|landscape), default unset so it rotates with the device
-                disableAnimations : true, // iOS
-                disableSuccessBeep: false // iOS and Android
-            }
-          );
-        });
-
-        
-        $$('.btn-reset').on('click', function (e) {
-
-          items = [];
-
-          app.router.navigate('/', {
-            reloadCurrent: true,
-            ignoreCache: true,
-          });
-        });
+        //   if (data.status)
+        //   {
+        //     app.data.total_items = data.totqty;
+        //     $$('.badge').text(app.data.total_items);
+        //   }
+        // });
 
       }
     }

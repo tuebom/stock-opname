@@ -1,5 +1,51 @@
 /* Your app styles here */
 
+.md a.checkout,
+.md .navbar,
+.md .subnavbar {
+  background: #03274e;
+}
+
+div.member-picture, div.member-info {
+  display: inline-block;
+  vertical-align: middle;
+}
+div.member-info {
+  margin-left: 10px;
+}
+
+img.responsive.profile, img.responsive.profile2 {
+  border-radius: 50px;
+  display: inline;
+}
+
+@media (min-width: 360px) {
+  /*.swiper-container-horizontal>.swiper-pagination-bullets {*/
+  .swiper-pagination.dashboard.swiper-pagination-bullets {
+    bottom: 40px;
+  }
+  .swiper-pagination.detail.swiper-pagination-bullets {
+    bottom: 0px;
+  }
+    
+  img.img-review {
+    width: 36px;
+    border-radius: 50px;
+  }    
+    
+  img.header {
+    width: 100%;
+  }    
+  
+  img.product {
+    width: 70%;
+    display: inline-block;
+    margin-left: auto;
+    margin-right: auto;
+    vertical-align: middle;
+  }
+}
+
 /* Left Panel right border when it is visible by breakpoint */
 .panel-left.panel-visible-by-breakpoint:before {
   position: absolute;
@@ -511,7 +557,7 @@ img.responsive {
 
 .facebook-card .card-content-inner {
   padding:15px 10px;
-
+}
 /*
 ===============================================
 
@@ -543,4 +589,140 @@ FOLLOWING - FOLLOWERS
 .kb {
   width: 100%;
   height: 0px;
+}
+
+/* .page[data-name="home"] {
+    background: url("../img/back.png") no-repeat center center fixed;
+    background-size: cover;
+} */
+h1 {
+  /* margin-top: 30px; */
+  margin-block-start: .1em;
+  font-size: 32px;
+}
+.row {
+  margin-bottom: 10px;
+}
+.row.item {
+  padding: 0 15px;
+  /* height: 100%; */
+}
+/* .col-33.tablet-33 {
+  height: 1px;
+}
+.col-33.tablet-33.title {
+  text-align: center;
+} */
+
+.row.no-gap.header {
+  margin-top: 15px;
+}
+
+.row.no-gap.display {
+  border-top: solid 1px #ababab;
+  border-bottom: solid 1px #ababab;
+}
+.col-100.tablet-100 {
+  padding: 0 15px;
+  font-size: 24px;
+  display: flex;
+}
+.col-100.tablet-100.grid {
+  border-radius: 10px;
+  border: 1px solid #ababab;
+}
+
+.md .row.no-gap .col-70 {
+  margin-top: 25px;
+}
+
+img.img-logo {
+  width: 140px;
+  display: block;
+  margin: 5px auto 0 auto; /*60px*/
+}
+
+.md .list {
+  margin: 0;
+}
+.md .list ul:before, .md .list ul:after {
+  background-color: transparent;
+}
+
+span.item-price, span.item-store, span.item-whouse {
+  font-size: 24px;
+  font-weight: bold;
+}
+img.img-product {
+  width: 65px;
+  height: auto;
+}
+
+.left.search {
+  width: 100%;
+}
+.md .navbar.search {
+  background: #fff;
+}
+
+input.search {
+  width: 80%;
+  height: 45px;
+  color: #000;
+  font-size: 32px;
+  border: 1px solid #ababab;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+input.qty {
+  width: 25%;
+  height: 45px;
+  color: #000;
+  font-size: 32px;
+  border: 1px solid #ababab;
+  border-radius: 10px;
+  padding: 5px;
+}
+
+button.button.col.button-round.btn-search {
+  background: #ff0000;
+  width: 64px !important;
+  font-size: 14px;
+  color: #fff;
+}
+button.button.col.button-round.btn-submit {
+  background: #ff0000;
+  width: 100px !important;
+  font-size: 14px;
+  color: #fff;
+}
+
+/* button.button.col.button-round.btn-dummy {
+  visibility: hidden;
+} */
+button.button.col.button-round.btn-scan,
+button.button.col.button-round.btn-reset {
+  background: #03274e;
+  width: 100px !important;
+  font-size: 14px;
+  color: #fff;
+}
+button.button.col.button-round.btn-clear {
+  background: #fff;
+  width: 70px !important;
+  border: 1px solid #ababab;
+  font-size: 12px;
+  color: #000;
+  margin-top: 17px;
+}
+table.grid {
+  width: 100%;
+  font-size: 14px;
+  border-spacing: 0;
+}
+table.grid > tbody > tr > td {
+  width: 20%;
+  text-align: center;
+  border-right: solid 1px #ababab;
 }

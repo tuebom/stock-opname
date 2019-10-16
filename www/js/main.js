@@ -41,6 +41,8 @@ var app = new Framework7({
       brand: null,
       image: null,
       sysqty: 0,
+
+      kolom: null,
       
       currentDate: null,
       bLogedIn: false,
@@ -107,30 +109,35 @@ var app = new Framework7({
       //*/
     }
   },      
-  routes: [
-    // Add your routes here
-    {
-      path: '/',
-      async: function (routeTo, routeFrom, resolve, reject) {
-        // Router instance
-        // var router = this;
+  routes: routes,
+  // Enable panel left visibility breakpoint
+  panel: {
+    leftBreakpoint: 960,
+  },
+  // [
+  //   // Add your routes here
+  //   {
+  //     path: '/',
+  //     async: function (routeTo, routeFrom, resolve, reject) {
+  //       // Router instance
+  //       // var router = this;
 
-        // App instance
-        // var app = router.app;
+  //       // App instance
+  //       // var app = router.app;
 
-        // Resolve route to load page
-        resolve(
-          {
-            componentUrl: './pages/home.html',
-          }
-        );
-      },
-    },
-    {
-      path: '/search/',
-      componentUrl: './pages/search.html',
-    },
-  ],
+  //       // Resolve route to load page
+  //       resolve(
+  //         {
+  //           componentUrl: './pages/home.html',
+  //         }
+  //       );
+  //     },
+  //   },
+  //   {
+  //     path: '/search/',
+  //     componentUrl: './pages/search.html',
+  //   },
+  // ],
 });
 
 var mainView = app.views.create('.view-main', {
@@ -233,18 +240,3 @@ app.on('pageInit', function (page) {
   });
 });
 
-
-$$(document).on('backbutton', function (e) {
-
-  e.preventDefault();
-  
-  var dialog = app.dialog.prompt('Input password..', function (pwd) {
-    
-    if (pwd == '123') {
-  
-      // window.plugins.insomnia.allowSleepAgain();
-      navigator.app.exitApp();
-    }
-  });
-  dialog.$el.find('input').focus();
-});
