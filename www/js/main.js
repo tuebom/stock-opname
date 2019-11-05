@@ -22,7 +22,7 @@ var items   = [];
 
 var app = new Framework7({
   root: '#app',
-  id:   'com.askitchen.stockopname',
+  id:   'com.askitchen.stock-opname',
   name: 'Stock Opname',
   
   init: true, // for calling keepAwake()
@@ -35,16 +35,14 @@ var app = new Framework7({
       user: null,
       password: null,
       whouse: null,
+      lokasi: null,
 
-      code: null,
-      name: null,
-      brand: null,
-      image: null,
+      // code: null,
+      // name: null,
+      // brand: null,
+      // image: null,
       sysqty: 0,
-
-      kolom: null,
       
-      currentDate: null,
       bLogedIn: false,
 
       endpoint: 'https://askitchen.com/api/v1/',
@@ -114,30 +112,6 @@ var app = new Framework7({
   panel: {
     leftBreakpoint: 960,
   },
-  // [
-  //   // Add your routes here
-  //   {
-  //     path: '/',
-  //     async: function (routeTo, routeFrom, resolve, reject) {
-  //       // Router instance
-  //       // var router = this;
-
-  //       // App instance
-  //       // var app = router.app;
-
-  //       // Resolve route to load page
-  //       resolve(
-  //         {
-  //           componentUrl: './pages/home.html',
-  //         }
-  //       );
-  //     },
-  //   },
-  //   {
-  //     path: '/search/',
-  //     componentUrl: './pages/search.html',
-  //   },
-  // ],
 });
 
 var mainView = app.views.create('.view-main', {
@@ -157,12 +131,6 @@ $$('#my-login-screen .login-button').on('click', function () {
   var password = $$('#my-login-screen [name="pwd"]').val();
   if (password == '') {
       app.dialog.alert('Masukkan password.', 'Login User');
-      return;
-  }
-
-  var whouse = $$('#my-login-screen [name="whouse"]')[0].selectedOptions[0].text;
-  if (whouse == '') {
-      app.dialog.alert('Pilih warehouse.', 'Login User');
       return;
   }
   
@@ -190,20 +158,31 @@ $$('#my-login-screen .login-button').on('click', function () {
       app.data.bLogedIn = true;
       app.data.user     = data.full_name;
       app.data.password = password;
-      app.data.whouse   = whouse;
-      // app.data.token = data.token;
-
-      console.log("app.data.whouse: "+app.data.whouse)
+      app.data.whouse   = $$('#my-login-screen [name="whouse"]').val();
+      app.data.lokasi   = $$('#my-login-screen [name="lokasi"]').val();
       
       // display driver name
       // $$('.member-name').text(data.full_name);
 
       // kosongkan isian nomor pin
       $$('#my-login-screen [name="pwd"]').val('');
-      
-      app.router.navigate('/', {
-        reloadCurrent: true,
-        ignoreCache: true,
+
+      var now = new Date();
+      var date = now.getFullYear()+'/'+(now.getMonth()+1)+'/'+now.getDate();
+
+      // console.log('date: '+date)
+      // console.log('user: '+data.full_name)
+
+      var formData = {};
+      formData.so_date    = date;
+      formData.login_user = data.full_name;
+    
+      app.request.post( app.data.endpoint + 'stock_opname/setinfo', formData, function (res) {
+    
+        app.router.navigate('/', {
+          reloadCurrent: true,
+          ignoreCache: true,
+        });
       });
     }
   },
@@ -223,6 +202,60 @@ $$('#my-login-screen').on('loginscreen:opened', function (e, loginScreen) {
 });
 
 
+// Login Screen
+$$('#my-login-screen [name="whouse"]').on('change', function () {
+  // app.dialog.alert($$(this).val())
+  
+  var wh = $$(this).val();
+  
+  if (wh == '02') {
+    $$('li.posisi').css('display', 'none');
+  } else {
+    $$('li.posisi').css('display', 'block');
+  }
+});
+
+$$(document).on('backbutton', function (e) {
+
+  e.preventDefault();
+  
+  // var dialog = app.dialog.prompt('Input password..', function (pwd) {
+    
+  //   if (pwd == '123') {
+  
+  //     // window.plugins.insomnia.allowSleepAgain();
+  //     navigator.app.exitApp();
+  //   }
+  // });
+  // dialog.$el.find('input').focus();
+  
+  // for example, based on what and where view you have
+  var leftp  = app.panel.left && app.panel.left.opened;
+  var rightp = app.panel.right && app.panel.right.opened;
+  
+  if (leftp || rightp) {
+
+      app.panel.close();
+      return false;
+  } else
+  if ($$('.modal-in').length > 0) {
+
+      app.dialog.close();
+      app.popup.close();
+      return false;
+  } else
+
+  if (app.views.main.router.url == '/' || app.views.main.router.url == '/tab2/' ||
+    app.views.main.router.url == '/android_asset/www/index.html') {
+    
+      if (app.data.bLogedIn)
+      app.request.post('https://apgroup.id/api/method/logout', [], function (res) {
+        navigator.app.exitApp();
+      });
+  }
+});
+
+
 app.on('pageInit', function (page) {
 
   $$('input').on('focus', function () {
@@ -239,4 +272,3 @@ app.on('pageInit', function (page) {
     $$('.kb').css('height', '0px');
   });
 });
-

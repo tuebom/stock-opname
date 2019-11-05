@@ -1,29 +1,15 @@
 <template>
-  <div data-name="home" class="page">
+  <div data-name="stock-opname" class="page">
 
     <div class="navbar">
       <div class="navbar-inner">
-        <div class="left">
-          <a href="#" class="link icon-only panel-open" data-panel="left">
-            <i class="icon f7-icons ios-only">menu</i>
-            <i class="icon material-icons md-only">menu</i>
+        <!-- <div class="left">
+          <a href="#" class="link back">
+            <i class="icon icon-back"></i>
+            <span class="ios-only">Back</span>
           </a>
-        </div>
-        <div class="title sliding"><img class="responsive" src="img/logo.png" /></div>
-        <div class="right">
-          <a href="/chat/" data-view=".view-main" class="link icon-only">
-            <i class="icon f7-icons ios-only">chat</i>
-            <i class="icon material-icons md-only">chat</i>
-          </a>
-          <!-- <a href="/cart/" data-view=".view-main" class="link icon-only">
-            <i class="icon f7-icons ios-only">shopping_cart<span class="badge color-red"></span></i>
-            <i class="icon material-icons md-only">shopping_cart<span class="badge color-red"></span></i>
-          </a> -->
-          <a href="#" class="link icon-only panel-open" data-panel="right">
-            <i class="icon f7-icons ios-only">more_vert</i>
-            <i class="icon material-icons md-only">more_vert</i>
-          </a>
-        </div>
+        </div> -->
+        <div class="title">Stock Opname</div>
       </div>
     </div>
 
@@ -36,17 +22,64 @@
     <div class="page-content">
       
      
-      <div class="block header">
-        <div data-pagination='{"el": ".swiper-pagination"}' class="swiper-container swiper-init dashboard">
-          <div class="swiper-pagination dashboard"></div>
-          <div class="swiper-wrapper">
-            {{#each banner}}
-            <div class="swiper-slide"><img class="lazy header" src="https://askitchen.com/upload/mobile-banner/{{filename}}" /></div>
-            {{/each}}
+      <!-- search bar -->
+      <div class="row no-gap header">
+        <div class="col-100 tablet-100">
+          <input type="text" class="search">&nbsp;&nbsp;
+          <button class="button col button-round btn-search"><i class="material-icons menu md-only" style="margin-top: 10px; color: #fff;">search</i></button>&nbsp;
+          <button class="button col button-round btn-scan"><img style="margin-top: 5px;" class="material-icons" src="img/barcode-scan.png" /></button>
+          <!-- <a href="#" class="barcode icon-only"><img class="material-icons" src="img/barcode-scan.png" /> -->
+        </div>
+      </div>
+      
+      <!-- item-info bar -->
+      <div class="item-info">
+        <!-- <div class="row no-gap">
+          <div class="col-70 title">Basic Long Apron Brown</div>
+          <div class="col-30 picture"><img class="img-product" src="img/noimage.png" /></div>
+        </div> -->
+      </div>
+
+      <!-- qty bar -->
+      <div class="row no-gap">
+        <div class="col-100 tablet-100">
+          <input type="text" class="qty">&nbsp;&nbsp;
+          <button class="button col button-round btn-submit">Update</button>&nbsp;
+          <!-- <button class="button col button-round btn-scan">Scan</button>&nbsp; -->
+          <button class="button col button-round btn-reset">Clear</button>
+        </div>
+      </div>
+          
+      <!-- header -->
+      <div class="row no-gap" style="padding: 0 15px 10px 15px; box-shadow: 0px 5px 7px 0px rgba(216,216,216,1);">
+        <div class="col-30 tablet-30">Kode</div>
+        <div class="col-55 tablet-55">Nama</div>
+        <div class="col-15 tablet-15">Qty</div>
+      </div>
+          
+      <!-- <div class="row" style="padding: 0 15px 10px 15px; box-shadow: 0px 5px 7px 0px rgba(216,216,216,1);">
+        <div class="col-100 tablet-100 grid">
+          <table class="grid">
+            <tbody>
+              <tr>
+                <td width="40%">Kode</td>
+                <td width="50%">Nama</td>
+                <td width="10%" style="border-right: none;">Qty</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div> -->
+
+      <!-- data grid -->
+      <div class="row item">
+          <div class="col-100 tablet-100">
+            <div class="list virtual-list virtual-stock">
+            </div>
+          
           </div>
         </div>
       </div>
-
     </div>
   </div>
 </template>
@@ -57,56 +90,307 @@
     on: {
       
       pageBeforeIn: function (event, page) {
-        
-        if (app.data.bLogedIn) {
 
-          // app.request.get( app.data.endpoint + 'cart/total_items', function(res) {
-                    
-          //   var data = JSON.parse(res);
-            
-          //   if (data.status)
-          //   {
-          //     app.data.total_items = data.totqty;
-          //     if (app.data.total_items > 0) {
-          //       $$('.badge').text(data.totqty);
-          //       $$('.badge').css("display", "block");
-          //     }
-          //   } else {
-          //     $$('.badge').css("display", "none");
-          //     app.data.total_items = 0;
-          //   }
-          // });
-        }
+        var virtualList = app.virtualList.create({
+          // List Element
+          el: '.virtual-stock',
+          // Pass array with items
+          items: items,
+          // Custom search function for searchbar
+          searchAll: function (query, items) {
+            // var found = [];
+            // for (var i = 0; i < items.length; i++) {
+            //   if (items[i].nama.toLowerCase().indexOf(query.toLowerCase()) >= 0 || query.trim() === '') found.push(i);
+            // }
+            // return found; //return array with mathced indexes
+          },
+          // List item Template7 template
+          itemTemplate:
+            '<li>' +
+            '  <div class="row no-gap">' +
+            '    <div class="col-30 tablet-30">{{kdbar}}</div>' +
+            '    <div class="col-55 tablet-55">{{nama}}</div>' +
+            '    <div class="col-15 tablet-15">{{qty}}</div>' +
+            '  </div>' +
+            // '    <table class="grid">' +
+            // '      <tbody>' +
+            // '        <tr>' +
+            // '          <td>{{kdbar}}</td>' +
+            // '          <td>{{nama}}</td>' +
+            // '          <td width="10%" style="border-right: none;"><span class="item-selisih">{{selisih}}</span></td>' +
+            // // '          <td style="border-right: none; padding: 0 15px;"><img class="img-product" src="{{gambar}}" />&nbsp;' +
+            // '        </tr>' +
+            // '      </tbody>' +
+            // '    </table>' +
+            '</li>',
+          // Item height
+          //height: app.theme === 'ios' ? 63 : 73,
+        });
+        
       },
       
       pageInit: function(e, page) {
-                
-        // Note: gunakan selecter secara lengkap untuk menghindari error
-        var cmp = $$('.swiper-container.swiper-init.dashboard');
-        // console.log(cmp.swiper)
-
-        if (cmp.swiper === undefined) {
-          
-          var swiper = app.swiper.create('.swiper-container.swiper-init.dashboard', {
-              speed: 400,
-              loop: true,
-              spaceBetween: 100
-          });
-
-          swiper.autoplay.start();
-        }
-
-
-
-        // app.request.get( app.data.endpoint + 'cart/total_items', function(res) {
-        //   var data = JSON.parse(res);
-          
-        //   if (data.status)
-        //   {
-        //     app.data.total_items = data.totqty;
-        //     $$('.badge').text(app.data.total_items);
+        
+        // var dialog = app.dialog.create({
+        //   title: 'Input Kolom',
+        //   text: 'Hello World',
+        //   buttonOk: 'OK',
+        //   buttonCancel: 'Batal',
+        //   on: {
+        //     opened: function () {
+        //       console.log('Dialog opened')
+        //     }
         //   }
         // });
+
+        // dialog.open();
+  
+        // var dialog = app.dialog.prompt('Input kolom..', function (kolom) {
+    
+        //   app.data.kolom = kolom;
+        // });
+        // dialog.$el.find('input').focus();
+
+        $$('.btn-search').on('click', function (e) {
+                
+          var whouse = app.data.whouse;
+          var lokasi = app.data.lokasi;
+          
+          var kode = $$('.search').val();
+
+          if (!kode) {
+            app.dialog.alert('Input kode item!');
+            return false;
+          }
+                
+          kode = kode.replace(/\//g, '*');
+          
+          app.preloader.show();
+
+          var url_stock = app.data.endpoint + 'stock-opname/';
+                
+          if (whouse == '01') {
+              url_stock += kode+'/'+whouse+'/'+lokasi;
+          } else {
+              url_stock += kode+'/'+whouse;
+          }
+
+          app.request.getJSON( url_stock, function(data) {
+            
+            app.preloader.hide();
+            
+            if (data.status) {
+                            
+              if (data.userid) {
+                                
+                app.dialog.confirm("Anda ingin mengupdate data?", function() {
+                    
+                  app.dialog.prompt("Masukkan jumlah barang", function(qty) {
+                  
+                    var formData = {};
+
+                    formData.whouse = whouse;
+                    formData.lokasi = lokasi;
+                    formData.kode   = kode;
+                    formData.qty    = qty;
+            
+                    app.request.post('https://askitchen.com/api/v1/stock-opname/update', frmData, function(res) {
+                        
+                      location.reload();
+                    });
+                  })
+
+                }, function() {
+                    $$('.search').val('');
+                    $$('.search').focus();
+                    return false;
+                });
+
+              } else {
+
+                console.log(data)
+                
+                var strHTML = '<div class="row no-gap display"><div class="col-70 title">'+data.name+'</div><div class="col-30 picture">';
+                  
+                if (data.image) {
+                  
+                  if (data.image.substring(0,4) == 'http' || data.image.substring(0,4) == 'data') {
+                    strHTML += '<img class="img-product" src="'+data.image+'" /></div></div>';
+                  } else {
+                    strHTML += '<img class="img-product" src="https://apgroup.id'+data.image+'" /></div></div>';
+                  }
+                } else {
+                  strHTML += '<img class="img-product" src="https://askitchen.com/images/noimage2.png" /></div></div>';
+                }
+
+                $$('.item-info').html(strHTML);
+                
+                $$('.search').attr('readonly', true);
+                
+                $$('.qty').focus();
+              }
+                
+            } else {
+                
+              $$('.search').val('');
+                
+              if (data.message === undefined) {
+                app.dialog.alert('Kode tidak ditemukan.');
+              } else {
+                app.dialog.alert(data.message)
+              }
+              $$('.search').focus();
+            }
+          });
+        });
+
+
+        $$('.btn-submit').on('click', function (e) {
+          
+          var kode = $$('.search').val();
+
+          if (!kode) {
+            app.dialog.alert('Input kode item!');
+            return false;
+          }
+
+          
+          var qty = $$('.qty').val();
+
+          if (!qty) {
+            app.dialog.alert('Input qty!');
+            return false;
+          }
+
+          // if (app.methods.itemExists(kode)) {
+          //   app.dialog.alert('Item barang sudah ada!');
+          //   $$('.search').val('');
+          //   return;
+          // }
+
+          app.preloader.show();
+
+          var formData = {};
+
+          // formData.tglinput  = kode;
+          // formData.userid    = app.data.userid;
+          
+          formData.whouse    = app.data.whouse;
+          formData.lokasi    = app.data.lokasi;
+          formData.item_code = kode;
+          formData.qty       = qty;
+
+          app.request.post( app.data.endpoint + 'stock-opname', formData, function(res) {
+            
+            app.preloader.hide();
+            
+            $$('.item-info').html('');
+            $$('.search').focus();
+          });
+        });
+        
+        $$('.btn-scan').on('click', function (e) {
+          
+          app.dialog.alert('Scan!')
+          /*cordova.plugins.barcodeScanner.scan(
+            
+            function (result) {
+              
+              if (!result.cancelled) {
+              
+                $$('.search').val(result.text);
+
+                // result.text - result.format
+                if (app.methods.itemExists(result.text)) {
+                  app.dialog.alert('Item barang sudah ada!');
+                  $$('.search').val('');
+                  return;
+                }
+
+                app.preloader.show();
+
+                app.request.getJSON( app.data.endpoint + 'stock-info/'+result.text, function(res) {
+                  
+                  app.preloader.hide();
+
+                  if (res.data.status) {
+                    
+                    items.push({ kdbar: res.data.kdbar,
+                                    nama: res.data.nama,
+                                    hjual: res.data.hjual,
+                                    store: res.data.store,
+                                    whouse: res.data.whouse,
+                                    gambar: res.data.gambar });
+
+                    // refresh display
+                    app.router.navigate('/', {
+                      reloadCurrent: true,
+                      ignoreCache: true,
+                    });
+                  
+                  } else
+                    app.dialog.alert('Item tidak ditemukan!');
+                });
+              } // result.cancelled?
+            },
+            function (error) {
+                app.dialog.alert("Scanning failed: " + error);
+            },
+            {
+                preferFrontCamera : false, // iOS and Android
+                showFlipCameraButton : true, // iOS and Android
+                showTorchButton : true, // iOS and Android
+                torchOn: true, // Android, launch with the torch switched on (if available)
+                saveHistory: false, // Android, save scan history (default false)
+                prompt : "Place a barcode inside the scan area", // Android
+                resultDisplayDuration: 500, // Android, display scanned text for X ms. 0 suppresses it entirely, default 1500
+                formats : "EAN_13,CODE_128,QR_CODE,PDF_417", // default: all but PDF_417 and RSS_EXPANDED
+                orientation : "portrait", // Android only (portrait|landscape), default unset so it rotates with the device
+                disableAnimations : true, // iOS
+                disableSuccessBeep: false // iOS and Android
+            }
+          );*/
+        });
+
+  
+        // $$('.page-content').on('scroll', function (e) {
+          
+        //   var card = $$('.card.item-detail');
+        //   var scrollTop = card.offsetTop; // $$('.card.item-detail').offsetTop;
+          
+        //   // console.log(scrollTop)
+          
+        //   if (scrollTop >= 56) {
+        //     card.removeClass("sticky")
+        //     // card.css('position', 'relative');
+        //   } else {
+        //     card.addClass("sticky");
+        //     // card.css('position', 'sticky');
+        //     // card.css('top', '0');
+        //   }
+        // })
+
+      
+        $$('.btn-reset').on('click', function (e) {
+          
+          var kode = $$('.search').val();
+
+          if (!kode) return false;
+
+          var formData = {};
+          
+          formData.whouse    = app.data.whouse;
+          formData.lokasi    = app.data.lokasi;
+          formData.item_code = kode;
+
+          app.request.post( app.data.endpoint + 'stock-opname/remove', formData, function(res) {
+            
+            $$('.item-info').html('');
+            $$('.search').attr('readonly', false);
+            $$('.search').val('');
+            $$('.search').focus();
+          });
+        });
 
       }
     }

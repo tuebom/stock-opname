@@ -2,6 +2,7 @@ backup/
 pages/backup/
 pages/backup2/
 server.js
+*.7z
 
 # Logs
 logs
