@@ -52,6 +52,7 @@ var app = new Framework7({
   // App root methods
   methods: {
     
+    /*
     itemAdd: function(kode) {
       
       if (app.methods.itemExists(kode)) {
@@ -96,7 +97,7 @@ var app = new Framework7({
           break;
         }
       return bFound;
-    },
+    }, */
   },
   on: {
 
@@ -178,10 +179,22 @@ $$('#my-login-screen .login-button').on('click', function () {
       formData.login_user = data.full_name;
     
       app.request.post( app.data.endpoint + 'stock_opname/setinfo', formData, function (res) {
-    
-        app.router.navigate('/', {
-          reloadCurrent: true,
-          ignoreCache: true,
+        
+        var url = app.data.endpoint + 'stock_opname/pending/' + app.data.whouse;
+        
+        if (app.data.whouse == '01')
+          url += '/' + app.data.lokasi;
+
+        app.request.getJSON( url, function (res) {
+
+          // console.log(res)
+
+          items = res.data;
+
+          app.router.navigate('/', {
+            reloadCurrent: true,
+            ignoreCache: true,
+          });
         });
       });
     }

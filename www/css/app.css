@@ -693,6 +693,7 @@ input.qty {
   padding: 5px;
 }
 
+button.button.col.button-round.btn-reset,
 button.button.col.button-round.btn-search,
 button.button.col.button-round.btn-scan {
   background: #ff0000;
@@ -700,23 +701,21 @@ button.button.col.button-round.btn-scan {
   font-size: 14px;
   color: #fff;
 }
-button.button.col.button-round.btn-submit {
+/* button.button.col.button-round.btn-submit {
   background: #ff0000;
   width: 100px !important;
   font-size: 14px;
   color: #fff;
-}
-
-/* button.button.col.button-round.btn-dummy {
-  visibility: hidden;
 } */
-/* button.button.col.button-round.btn-scan, */
-button.button.col.button-round.btn-reset {
+
+button.button.col.button-round.btn-update,
+button.button.col.button-round.btn-submit {
   background: #03274e;
-  width: 100px !important;
+  width: 90px !important;
   font-size: 14px;
   color: #fff;
 }
+
 button.button.col.button-round.btn-clear {
   background: #fff;
   width: 70px !important;
