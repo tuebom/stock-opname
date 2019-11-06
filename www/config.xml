@@ -7,13 +7,13 @@
         id        = "com.app.askitchen.stockinfo"
         version   = "1.0.0">
 
-  <name>Stock Info</name>
+  <name>Stock Opname</name>
 
   <description>
-      Aplikasi info stock ASKITCHEN.
+      Aplikasi stock opname ASKITCHEN.
   </description>
 
-  <author href="https://github.com/askitchen/stock-info.git" email="askitchen@gmail.com">
+  <author href="https://github.com/tuebom/stock-opname.git" email="askitchen@gmail.com">
       ASTECH
   </author>
 
