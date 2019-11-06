@@ -4,7 +4,7 @@
 <widget xmlns     = "http://www.w3.org/ns/widgets"
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:gap = "http://phonegap.com/ns/1.0"
-        id        = "com.app.askitchen.stockinfo"
+        id        = "com.app.askitchen.stock-opname"
         version   = "1.0.0">
 
   <name>Stock Opname</name>
