@@ -59,11 +59,8 @@
           
       <!-- data grid -->
       <div class="row no-gap item">
-        <!-- <div class="col-100 tablet-100"> -->
-          <div class="list virtual-list virtual-stock">
-          </div>
-        
-        <!-- </div> -->
+        <div class="list virtual-list virtual-stock">
+        </div>
       </div>
     </div>
   </div>
@@ -97,16 +94,6 @@
             '    <div class="col-55 tablet-55">{{nama}}</div>' +
             '    <div class="col-15 tablet-15">{{qty}}</div>' +
             '  </div>' +
-            // '    <table class="grid">' +
-            // '      <tbody>' +
-            // '        <tr>' +
-            // '          <td>{{kdbar}}</td>' +
-            // '          <td>{{nama}}</td>' +
-            // '          <td width="10%" style="border-right: none;"><span class="item-selisih">{{selisih}}</span></td>' +
-            // // '          <td style="border-right: none; padding: 0 15px;"><img class="img-product" src="{{gambar}}" />&nbsp;' +
-            // '        </tr>' +
-            // '      </tbody>' +
-            // '    </table>' +
             '</li>',
           // Item height
           //height: app.theme === 'ios' ? 63 : 73,
@@ -372,6 +359,8 @@
           app.request.post( app.data.endpoint + 'stock-opname/submit', formData, function(res) {
             
               app.preloader.hide();
+              
+              items   = {};
 
               app.router.navigate('/', {
                 reloadCurrent: true,
@@ -397,31 +386,6 @@
         //     // card.css('top', '0');
         //   }
         // })
-
-      
-        // $$('.btn-reset').on('click', function (e) {
-          
-        //   var kode = $$('.search').val();
-
-        //   // app.dialog.alert(kode)
-
-        //   if (!kode) return false;
-
-        //   var formData = {};
-          
-        //   formData.whouse    = app.data.whouse;
-        //   formData.lokasi    = app.data.lokasi;
-        //   formData.item_code = kode;
-
-        //   app.request.post( app.data.endpoint + 'stock-opname/remove', formData, function(res) {
-            
-        //     $$('.item-info').html('');
-            
-        //     $$('.search').prop('readonly', false);
-        //     $$('.search').val('');
-        //     $$('.search').focus();
-        //   });
-        // });
 
       }
     }

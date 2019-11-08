@@ -1,7 +1,7 @@
 // Dom7
 var $$ = Dom7;
 
-var items   = [];
+var items   = {};
 // sample data
 // [
 //   {
@@ -162,10 +162,7 @@ $$('#my-login-screen .login-button').on('click', function () {
       app.data.whouse   = $$('#my-login-screen [name="whouse"]').val();
       app.data.lokasi   = $$('#my-login-screen [name="lokasi"]').val();
       
-      // display driver name
-      // $$('.member-name').text(data.full_name);
-
-      // kosongkan isian nomor pin
+      // kosongkan isian password
       $$('#my-login-screen [name="pwd"]').val('');
 
       var now = new Date();
